@@ -1,0 +1,41 @@
+{
+    "name": "gpio/i2c",
+    "description": "The GeneralPurposeIO I2C package.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Angel Gonzalez",
+            "email": "angel@projectsaturnstudios.com"
+        }
+    ],
+    "homepage": "https://scrapyard-io.projectsaturnstudios.com",
+    "support": {
+        "issues": "https://github.com/ScrapyardIO/gpio-framework/issues",
+        "source": "https://github.com/ScrapyardIO/gpio-framework"
+    },
+    "require": {
+        "php": "^8.3",
+        "gpio/common": "0.6.0",
+        "gpio/digital": "0.6.0",
+        "gpio/contracts": "0.6.0"
+    },
+    "suggest": {
+        "microscrap/i2c": "^0.5.0 - POSIX I2C",
+        "microscrap/gpio": "^0.5.0 - POSIX Digital Pins",
+        "microscrap/mpsse": "^0.5.0c- MPSSE USB Drivers"
+    },
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "GeneralPurposeIO\\I2C\\": ""
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.6.x-dev"
+        }
+    }
+}
