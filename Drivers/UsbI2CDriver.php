@@ -2,7 +2,6 @@
 
 namespace GeneralPurposeIO\I2C\Drivers;
 
-use GeneralPurposeIO\Contracts\Digital\DigitalIODriver;
 use Microscrap\Bindings\MPSSE\MPSSE;
 use Microscrap\Bindings\MPSSE\MPSSEContext;
 use GeneralPurposeIO\Contracts\I2C\I2CException;
