@@ -33,4 +33,9 @@ class PosixI2CBus extends I2CBus
 
         return $results;
     }
+
+    public function canServeDigitalPins(): bool
+    {
+        return false;
+    }
 }

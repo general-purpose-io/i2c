@@ -15,7 +15,7 @@ class MpsseI2CFactory extends I2CFactory
 {
     public MPSSEEndianness $endianness = MPSSEEndianness::MSB;
 
-    public MPSSEClockRate $clock_rate = MPSSEClockRate::ONE_MHZ;
+    public MPSSEClockRate $clock_rate = MPSSEClockRate::FOUR_HUNDRED_KHZ;
 
     public function __construct(
         protected MpsseSupportedDevice $device

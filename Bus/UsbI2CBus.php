@@ -38,4 +38,9 @@ class UsbI2CBus extends I2CBus
         $driver = new UsbDigitalIODriver($this->driver->getContext());
         return new DigitalOutputPin($pin, $driver);
     }
+
+    public function canServeDigitalPins(): bool
+    {
+        return true;
+    }
 }

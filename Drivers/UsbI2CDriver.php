@@ -15,6 +15,19 @@ class UsbI2CDriver extends I2CDriver
         protected readonly MPSSEContext $context,
     ) {}
 
+    public function probe(int $address): bool
+    {
+        if ($address < 0x03 || $address > 0x77) {
+            return false;
+        }
+
+        MPSSE::start($this->context);
+        $acknowledged = $this->writeByte(($address << 1) | 0);
+        MPSSE::stop($this->context);
+
+        return $acknowledged;
+    }
+
     public function writeRead(int $address, array|string $bytes_to_write, int $bytes_to_read): array|false
     {
         if (is_array($bytes_to_write)) {

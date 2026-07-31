@@ -8,6 +8,11 @@ abstract class I2CDriver implements DriverContract
 {
     abstract public function close(): void;
 
+    /**
+     * SMBus-quick-style presence probe (like i2cdetect -q).
+     */
+    abstract public function probe(int $address): bool;
+
     abstract public function read(int $address,int $len): array|false;
 
     abstract public function write(int $address,array|string $data): int;
