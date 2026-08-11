@@ -2,7 +2,7 @@
 
 namespace GeneralPurposeIO\I2C;
 
-use Fabricate\NutsAndBolts\MagicAliases\MagicAlias;
+use Fabricate\MagicAliases\MagicAlias;
 use GeneralPurposeIO\Contracts\I2C\I2CCommunicationAdapter as CommunicationAdapter;
 
 /**
