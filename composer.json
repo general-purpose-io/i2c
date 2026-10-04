@@ -22,16 +22,15 @@
     ],
     "require": {
         "php": "^8.4|^8.5|^8.6",
-        "gpio/contracts": "^0.9.0",
-        "gpio/nuts-and-bolts": "^0.9.0",
-        "venusian-voyager/collections": "^0.9.0",
-        "venusian-voyager/contracts": "^0.9.0",
-        "venusian-voyager/io-pools": "^0.9.0",
-        "venusian-voyager/nuts-and-bolts": "^0.9.0"
+        "gpio/contracts": "^0.10.0",
+        "gpio/nuts-and-bolts": "^0.10.0",
+        "venusian-voyager/collections": "^0.10.0",
+        "venusian-voyager/contracts": "^0.10.0",
+        "venusian-voyager/nuts-and-bolts": "^0.10.0"
     },
     "suggest": {
-        "microscrap/scrapyard-linux": "^0.9.0 - native i2c-dev buses",
-        "microscrap/scrapyard-usb": "^0.9.0 - MPSSE I2C over FTDI"
+        "microscrap/scrapyard-linux": "^0.10.0 - native i2c-dev buses",
+        "microscrap/scrapyard-usb": "^0.10.0 - MPSSE I2C over FTDI"
     },
     "autoload": {
         "psr-4": {
@@ -45,10 +44,7 @@
         "venusian": {
             "providers": [
                 "GeneralPurposeIO\\I2C\\I2CServiceProvider"
-            ],
-            "aliases": {
-                "I2C": "GeneralPurposeIO\\I2C\\I2C"
-            }
+            ]
         }
     },
     "config": {

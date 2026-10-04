@@ -3,10 +3,10 @@
 namespace GeneralPurposeIO\I2C;
 
 use GeneralPurposeIO\Contracts\NutsAndBolts\BusJob;
-use Voyager\Contracts\IOPools\ShouldPool;
+use Voyager\Contracts\IOPools\WorkerPools\ShouldPool;
 
 /**
- * One bus job, wherever the work target runs it. The worker builds the driver by class and connects the bus
+ * One bus job, wherever the worker pool runs it. The worker builds the driver by class and connects the bus
  * itself (i2c-dev allows many opens; the kernel serialises transfers). One driver per class per process, so a
  * worker keeps its buses open between gigs.
  */

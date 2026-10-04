@@ -90,12 +90,11 @@ abstract class I2CConnectionDriver
     }
 
     /**
-     * Where a job runs: a BusGig to the named work target, or to the configured one. An in-process target (sync,
-     * defer) runs the gig on this process's own worker-side driver, with its own bus handle, as a worker would.
+     * Where a job runs: a BusGig to the named worker pool, or to the default one.
      */
-    protected function dispatch(string|int $device, int $address, BusJob $job, ?string $target, Loop $loop, BusQueue $queue): Promise
+    protected function dispatch(string|int $device, int $address, BusJob $job, ?string $pool, Loop $loop, BusQueue $queue): Promise
     {
-        return $this->runGig(new BusGig(static::class, $device, $address, $job), $target);
+        return $this->runGig(new BusGig(static::class, $device, $address, $job), $pool);
     }
 
     protected function protocolException(): string

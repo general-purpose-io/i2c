@@ -2,9 +2,9 @@
 
 namespace GeneralPurposeIO\I2C;
 
-use GeneralPurposeIO\Contracts\I2C\I2CException;
+use InvalidArgumentException;
 use Voyager\Contracts\IOPools\Loop;
-use Voyager\Contracts\IOPools\WorkTarget;
+use Voyager\Contracts\IOPools\WorkerPools\WorkerPool;
 use Voyager\Contracts\Vessel\DataBindingException;
 use Voyager\NutsAndBolts\Manager;
 
@@ -20,12 +20,12 @@ class I2CConnectionManager extends Manager
         return $this->config->get('gpio.protocols.i2c.default', 'none');
     }
 
-    /** Every driver, built in or extend()ed, looks the loop and the work targets up when used, so provider order never matters. */
+    /** Every driver, built in or extend()ed, looks the loop and the worker pools up when used, so provider order never matters. */
     protected function createDriver(string $driver): I2CConnectionDriver
     {
         return parent::createDriver($driver)
             ->resolvesLoopWith(fn (): ?Loop => $this->eventLoop())
-            ->resolvesTargetsWith(fn (?string $target): WorkTarget => $this->workTarget($target));
+            ->resolvesPoolsWith(fn (?string $pool): WorkerPool => $this->workerPool($pool));
     }
 
     private function eventLoop(): ?Loop
@@ -42,12 +42,31 @@ class I2CConnectionManager extends Manager
         }
     }
 
-    private function workTarget(?string $target): WorkTarget
+    /**
+     * The pool via() offloads to: 'thread' or 'process' by name, or with none named, the thread pool when it is on
+     * and the process pool otherwise.
+     *
+     * @throws InvalidArgumentException the pool doesn't exist or isn't on
+     */
+    private function workerPool(?string $pool): WorkerPool
     {
-        if (! $this->vessel->isBound('work-targets')) {
-            throw I2CException::noWorkTargets();
+        $binding = match ($pool) {
+            null => $this->vessel->isBound('thread-workers') ? 'thread-workers' : 'process-workers',
+            'thread' => 'thread-workers',
+            'process' => 'process-workers',
+            default => throw new InvalidArgumentException(
+                "There is no \"{$pool}\" pool: offload to 'thread' or 'process', or name none for the thread pool when it is on and the process pool otherwise."
+            ),
+        };
+
+        if (! $this->vessel->isBound($binding)) {
+            throw new InvalidArgumentException(match (true) {
+                is_null($pool) => 'Offloading runs on a worker pool, and none is on: enable io-pools.pool_workers.threads or io-pools.pool_workers.process.',
+                $pool === 'thread' => 'The thread pool is off: enable io-pools.pool_workers.threads to offload to it.',
+                default => 'The process pool is off: enable io-pools.pool_workers.process to offload to it.',
+            });
         }
 
-        return $this->vessel->make('work-targets')->driver($target);
+        return $this->vessel->make($binding);
     }
 }

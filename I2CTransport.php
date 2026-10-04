@@ -51,19 +51,19 @@ abstract class I2CTransport implements TransportContract
         return $this;
     }
 
-    public function via(?string $target = null): OffloadedI2CTransport
+    public function via(?string $pool = null): OffloadedI2CTransport
     {
         $this->ensureOffloadable();
 
-        return new OffloadedI2CTransport($this, $target);
+        return new OffloadedI2CTransport($this, $pool);
     }
 
     /** Wire-internal: how a via() handle queues a job, checked again at every call so a handle outlives nothing. */
-    public function offload(BusJob $job, ?string $target): Promise
+    public function offload(BusJob $job, ?string $pool): Promise
     {
         $this->ensureOffloadable();
 
-        return $this->driver->offload($this->device, $this->address, $job, $target);
+        return $this->driver->offload($this->device, $this->address, $job, $pool);
     }
 
     /** Queued jobs for this slave are rejected, a running one finishes, then the slave closes. */

@@ -12,7 +12,7 @@ final class OffloadedI2CTransport implements OffloadedI2C
 {
     public function __construct(
         private readonly I2CTransport $transport,
-        private readonly ?string $target,
+        private readonly ?string $pool,
     ) {}
 
     public function write(array|string $data): Promise
@@ -37,6 +37,6 @@ final class OffloadedI2CTransport implements OffloadedI2C
 
     public function run(BusJob $job): Promise
     {
-        return $this->transport->offload($job, $this->target);
+        return $this->transport->offload($job, $this->pool);
     }
 }
